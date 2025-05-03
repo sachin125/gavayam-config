@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: PRASHNAVALI
+    
+logging:
+  file:
+    name: /home/uulin/gavayam/${spring.application.name}.log
+    path: /home/uulin/
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %log{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %log{36} - %msg%n"
+  level:
+    root: info
+    org:
+      springframework:
+        web: debug
+        security: debug
+        jpa: debug
+        data: debug
+        oauth2: debug
+      hibernate:
+        SQL: off
+    com:
+      gavayam: debug
+  logback:
+    rollingpolicy:
+      file-name-pattern: /home/uulin/gavayam/${spring.application.name}-%d{yyyy-MM-dd}.%i.log
+      max-file-size: 5MB
+      total-size-cap: 50MB
+      max-history: 10
