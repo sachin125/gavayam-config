@@ -1,7 +1,53 @@
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:9002/service-registry/eureka/
+
+server:
+  port: 9011
+  servlet:
+    context-path: /prashanavali
+
 spring:
-  application:
-    name: PRASHNAVALI
-    
+  profiles:
+    active: default
+  datasource:
+    url: jdbc:mysql://localhost:3306/gavayam_prashanavali?noAccessToProcedureBodies=true&autoReconnect=true&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  config:
+    import: "optional:configserver:http://localhost:9001/gconfigserver"
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readiness-state:
+      enabled: true
+    liveness-state:
+      enabled: true
+  endpoint:
+    shutdown:
+      access: none
+    health:
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+
 logging:
   file:
     name: /home/uulin/gavayam/${spring.application.name}.log
@@ -22,9 +68,4 @@ logging:
         SQL: off
     com:
       gavayam: debug
-  logback:
-    rollingpolicy:
-      file-name-pattern: /home/uulin/gavayam/${spring.application.name}-%d{yyyy-MM-dd}.%i.log
-      max-file-size: 5MB
-      total-size-cap: 50MB
-      max-history: 10
+
